@@ -45,7 +45,7 @@ with tabs[1]:
     try:
         # API 키 불러오기 및 안정적인 기본 모델(gemini-pro) 세팅
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-        model = genai.GenerativeModel('gemini-pro')
+        model = genai.GenerativeModel('gemini-2.5-flash')
 
         # 채팅 세션 초기화 (페르소나 부여를 첫 대화 기록에 몰래 삽입하여 에러 원천 차단)
         if "chat_session" not in st.session_state:
