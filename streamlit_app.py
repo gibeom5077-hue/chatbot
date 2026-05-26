@@ -2,7 +2,7 @@ import streamlit as st
 import pandas as pd
 import time
 from datetime import datetime, timedelta
-import google.generativeai as genai # Gemini AI 라이브러리 추가됨!
+import google.generativeai as genai
 
 # --- 1. 페이지 설정 및 와이드 레이아웃 ---
 st.set_page_config(page_title="Labor-Link", layout="wide", initial_sidebar_state="collapsed")
@@ -75,18 +75,17 @@ with tabs[1]:
                     st.write(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
 
-except Exception as e:
-    st.error(f"🚨 에러 상세 내용: {e}")
+    except Exception as e:
+        st.error(f"🚨 에러 상세 내용: {e}")
 
 # --- TAB 3: 맞춤 법률 진단 ---
 with tabs[2]:
     st.markdown("### 취약계층 맞춤 진단 및 계산기")
-    st.markdown("<div class='info-card'>#### 기초 근무 환경 정보", unsafe_allow_html=True)
+    st.markdown("<div class='info-card'>#### 기초 근무 환경 정보</div>", unsafe_allow_html=True)
     c1, c2, c3 = st.columns(3)
     c1.number_input("상시 근로자 수", min_value=1, value=5)
     c2.radio("계약 형태", ["일반 근로계약서", "3.3% 프리랜서 위임 계약"])
     c3.number_input("1주 소정 근로시간", min_value=1, value=16)
-    st.markdown("</div>", unsafe_allow_html=True)
 
     situation = st.selectbox("권익 피해 유형을 선택해 주세요.", ["선택하세요", "외국인 노동자 권리 보장 및 체류 협박 대응", "임금채권 소멸시효 및 체불 모델", "위장 프리랜서 검증", "직장 내 괴롭힘"])
     if situation == "외국인 노동자 권리 보장 및 체류 협박 대응":
