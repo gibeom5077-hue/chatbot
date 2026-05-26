@@ -43,19 +43,18 @@ with tabs[1]:
     st.caption("근로기준법 및 심리치료(CBT)에 기반하여 훈련된 AI 상담사입니다. 편하게 이야기해 보세요.")
     
     try:
-        # API 키 불러오기 및 모델 세팅
+        # API 키 불러오기 및 안정적인 기본 모델(gemini-pro) 세팅
         genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
-        system_instruction = """
-        당신은 부당한 대우를 받은 취약계층/일용직 노동자를 위한 전문 심리 상담사입니다. 
-        매우 공감적이고 따뜻한 말투(해요체)로 위로하며, 인지행동치료(CBT) 기법을 활용해 노동자의 자책감을 덜어주세요. 
-        가스라이팅 당한 노동자에게 '당신의 잘못이 아닌 고용주의 위법'임을 명확하고 다정하게 인지시켜주세요.
-        답변은 3~4문장으로 핵심만 길지 않게 말해주세요.
-        """
-        model = genai.GenerativeModel('gemini-1.5-flash', system_instruction=system_instruction)
+        model = genai.GenerativeModel('gemini-pro')
 
-        # 채팅 세션 초기화
+        # 채팅 세션 초기화 (페르소나 부여를 첫 대화 기록에 몰래 삽입하여 에러 원천 차단)
         if "chat_session" not in st.session_state:
-            st.session_state.chat_session = model.start_chat(history=[])
+            system_prompt = "당신은 부당한 대우를 받은 취약계층 노동자를 위한 전문 심리 상담사입니다. 매우 공감적이고 따뜻한 말투(해요체)로 위로하며, 인지행동치료(CBT) 기법을 활용해 노동자의 자책감을 덜어주세요. '당신의 잘못이 아닌 고용주의 위법'임을 명확하고 다정하게 인지시켜주세요. 답변은 3~4문장으로 짧게 해주세요."
+            
+            st.session_state.chat_session = model.start_chat(history=[
+                {"role": "user", "parts": [system_prompt]},
+                {"role": "model", "parts": ["네, 알겠습니다. 따뜻하고 전문적인 심리 상담사로서 노동자분들의 상처받은 마음을 다정하게 치유해 드리겠습니다."]}
+            ])
             st.session_state.messages = [{"role": "assistant", "content": "안녕하세요. 오늘 현장에서 마음 아픈 일이 있으셨나요? 혼자 앓지 말고 제게 편하게 털어놓아 주세요."}]
 
         # 기존 대화 출력
