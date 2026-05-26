@@ -75,8 +75,8 @@ with tabs[1]:
                     st.write(response.text)
             st.session_state.messages.append({"role": "assistant", "content": response.text})
 
-    except Exception as e:
-        st.error("💡 AI 상담사를 켜려면 Streamlit Cloud에 API 키를 입력해야 합니다. (이전 안내의 3단계를 진행해 주세요!)")
+except Exception as e:
+    st.error(f"🚨 에러 상세 내용: {e}")
 
 # --- TAB 3: 맞춤 법률 진단 ---
 with tabs[2]:
