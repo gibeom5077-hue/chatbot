@@ -26,7 +26,7 @@ if "messages" not in st.session_state:
 # -------------------------------------------------------------
 # 2. 제미나이(Gemini) API 및 프롬프트 고도화 (보안 및 버전 수정 완료)
 # -------------------------------------------------------------
-# 🚨 깃허브 해킹 방지를 위해 코드가 아닌 Streamlit Secrets에서 키를 몰래 불러옵니다.
+# 🚨 깃허브 해킹 방지를 위해 코드가 아닌 Streamlit Secrets에서 키를 불러옵니다.
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
 
 # 🔥 프롬프트 디벨롭: 내러티브 테라피 및 은유적 표현 강화
@@ -41,7 +41,7 @@ SYSTEM_PROMPT = """
 4. 분량 및 어조: 정중하고 다정한 '해요체'를 사용하며, 사용자가 부담을 느끼지 않도록 핵심적인 위로와 솔루션을 3~4문장으로 간결하게 전달하세요.
 """
 
-# ✅ 404 에러 원인이었던 모델명을 최신 버전(gemini-2.5-flash)으로 수정 완료!
+# ✅ 최신 버전(gemini-2.5-flash) 적용
 model = genai.GenerativeModel(
     model_name="gemini-2.5-flash",
     system_instruction=SYSTEM_PROMPT
@@ -124,15 +124,26 @@ with tabs[0]:
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
 
+    # ✅ 유튜브 하이퍼링크 적용 완료
     st.markdown("""
     <div class="content-wrap">
         <div class="section-title">추천 노동 관련 영상</div>
         <div class="video-grid">
-            <div><div class="thumb" style="background:#bfdbfe;">일용직 권리<br>5가지 <span class="time">5:12</span></div><div class="card-title">일용직 노동자가 꼭 알아야 할 권리</div><div class="card-meta">노동법 TV · 조회수 1.2만회</div></div>
-            <div><div class="thumb" style="background:#5b9a8b; color:white;">임금체불 시<br>대처 방법 <span class="time">4:38</span></div><div class="card-title">임금체불 대처 방법 총정리</div><div class="card-meta">노동법 TV · 조회수 2.3만회</div></div>
-            <div><div class="thumb" style="background:#fde7b4;">근로계약서<br>주의사항 <span class="time">6:01</span></div><div class="card-title">근로계약서 작성 주의사항</div><div class="card-meta">노동법 TV · 조회수 1.8만회</div></div>
-            <div><div class="thumb" style="background:#ddd6fe;">산업재해 보상<br>알아보기 <span class="time">6:54</span></div><div class="card-title">산재 보상 절차 완벽 가이드</div><div class="card-meta">노동법 TV · 조회수 1.5만회</div></div>
-            <div><div class="thumb" style="background:#bae6fd;">퇴직금 계산<br>이해하기 <span class="time">3:59</span></div><div class="card-title">퇴직금 계산 방법 쉽게 이해하기</div><div class="card-meta">노동법 TV · 조회수 9천회</div></div>
+            <a href="https://www.youtube.com/results?search_query=일용직+노동자+권리" target="_blank" style="text-decoration:none; color:inherit;">
+                <div><div class="thumb" style="background:#bfdbfe;">일용직 권리<br>5가지 <span class="time">5:12</span></div><div class="card-title">일용직 노동자가 꼭 알아야 할 권리</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=임금체불+대처방법" target="_blank" style="text-decoration:none; color:inherit;">
+                <div><div class="thumb" style="background:#5b9a8b; color:white;">임금체불 시<br>대처 방법 <span class="time">4:38</span></div><div class="card-title">임금체불 대처 방법 총정리</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=근로계약서+작성+주의사항" target="_blank" style="text-decoration:none; color:inherit;">
+                <div><div class="thumb" style="background:#fde7b4;">근로계약서<br>주의사항 <span class="time">6:01</span></div><div class="card-title">근로계약서 작성 주의사항</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=산재+보상+절차" target="_blank" style="text-decoration:none; color:inherit;">
+                <div><div class="thumb" style="background:#ddd6fe;">산업재해 보상<br>알아보기 <span class="time">6:54</span></div><div class="card-title">산재 보상 절차 완벽 가이드</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
+            </a>
+            <a href="https://www.youtube.com/results?search_query=퇴직금+계산+방법" target="_blank" style="text-decoration:none; color:inherit;">
+                <div><div class="thumb" style="background:#bae6fd;">퇴직금 계산<br>이해하기 <span class="time">3:59</span></div><div class="card-title">퇴직금 계산 방법 쉽게 이해하기</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
+            </a>
         </div>
     </div>
     """, unsafe_allow_html=True)
