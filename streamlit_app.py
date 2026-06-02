@@ -24,7 +24,7 @@ if "messages" not in st.session_state:
     ]
 
 # -------------------------------------------------------------
-# 2. 제미나이(Gemini) API 및 프롬프트 고도화 (보안 처리 완료)
+# 2. 제미나이(Gemini) API 및 프롬프트 고도화 (보안 및 버전 수정 완료)
 # -------------------------------------------------------------
 # 🚨 깃허브 해킹 방지를 위해 코드가 아닌 Streamlit Secrets에서 키를 몰래 불러옵니다.
 genai.configure(api_key=st.secrets["GEMINI_API_KEY"])
@@ -41,8 +41,9 @@ SYSTEM_PROMPT = """
 4. 분량 및 어조: 정중하고 다정한 '해요체'를 사용하며, 사용자가 부담을 느끼지 않도록 핵심적인 위로와 솔루션을 3~4문장으로 간결하게 전달하세요.
 """
 
+# ✅ 404 에러 원인이었던 모델명을 최신 버전(gemini-2.5-flash)으로 수정 완료!
 model = genai.GenerativeModel(
-    model_name="gemini-1.5-flash",
+    model_name="gemini-2.5-flash",
     system_instruction=SYSTEM_PROMPT
 )
 
