@@ -3,7 +3,7 @@ import pandas as pd
 import time
 from datetime import datetime
 import google.generativeai as genai
-from PIL import Image  # 🔥 이미지를 읽기 위한 새로운 기능 추가!
+from PIL import Image  # 이미지 인식을 위한 기능
 
 # -------------------------------------------------------------
 # 1. 페이지 설정 및 초기화
@@ -64,13 +64,6 @@ st.markdown("""
 .hero-left p { font-size:18px; line-height:1.8; color:#334155; margin-bottom:28px; }
 .main-btn { display:inline-block; background:#2563eb; color:white; padding:14px 26px; border-radius:8px; font-weight:800; box-shadow:0 7px 18px rgba(37,99,235,.25); cursor: pointer; }
 .hero-video-wrap { padding: 10px; background: white; border-radius: 16px; box-shadow: 0 12px 32px rgba(15,23,42,.12); border: 1px solid #e5e7eb; }
-.content-wrap { padding:45px 12px 20px 12px; }
-.section-title { font-size:25px; font-weight:900; color:#0f172a; margin-bottom:22px; }
-.video-grid { display:grid; grid-template-columns:repeat(5,1fr); gap:22px; }
-.thumb { height:135px; border-radius:12px; padding:20px; font-size:22px; line-height:1.35; font-weight:900; color:#0f172a; position:relative; }
-.time { position:absolute; right:10px; bottom:10px; background:rgba(0,0,0,.82); color:white; font-size:13px; padding:3px 7px; border-radius:5px; }
-.card-title { font-weight:800; color:#0f172a; margin-top:12px; font-size:15px; }
-.card-meta { font-size:13px; color:#64748b; margin-top:6px; }
 .info-card { background:#fff; padding:24px; border-radius:16px; box-shadow:0 4px 12px rgba(0,0,0,.05); border:1px solid #F1F5F9; margin-bottom:20px; }
 .step-container { display:flex; justify-content:space-between; margin-bottom:20px; padding:10px; background:#f1f5f9; border-radius:10px; }
 .step { text-align:center; font-size:14px; font-weight:600; color:#94a3b8; width:25%; }
@@ -117,29 +110,6 @@ with tabs[0]:
         st.video(YOUTUBE_URL)
         st.markdown('</div>', unsafe_allow_html=True)
     st.markdown('</div>', unsafe_allow_html=True)
-
-    st.markdown("""
-    <div class="content-wrap">
-        <div class="section-title">추천 노동 관련 영상</div>
-        <div class="video-grid">
-            <a href="https://www.youtube.com/results?search_query=일용직+노동자+권리" target="_blank" style="text-decoration:none; color:inherit;">
-                <div><div class="thumb" style="background:#bfdbfe;">일용직 권리<br>5가지 <span class="time">5:12</span></div><div class="card-title">일용직 노동자가 꼭 알아야 할 권리</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=임금체불+대처방법" target="_blank" style="text-decoration:none; color:inherit;">
-                <div><div class="thumb" style="background:#5b9a8b; color:white;">임금체불 시<br>대처 방법 <span class="time">4:38</span></div><div class="card-title">임금체불 대처 방법 총정리</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=근로계약서+작성+주의사항" target="_blank" style="text-decoration:none; color:inherit;">
-                <div><div class="thumb" style="background:#fde7b4;">근로계약서<br>주의사항 <span class="time">6:01</span></div><div class="card-title">근로계약서 작성 주의사항</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=산재+보상+절차" target="_blank" style="text-decoration:none; color:inherit;">
-                <div><div class="thumb" style="background:#ddd6fe;">산업재해 보상<br>알아보기 <span class="time">6:54</span></div><div class="card-title">산재 보상 절차 완벽 가이드</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
-            </a>
-            <a href="https://www.youtube.com/results?search_query=퇴직금+계산+방법" target="_blank" style="text-decoration:none; color:inherit;">
-                <div><div class="thumb" style="background:#bae6fd;">퇴직금 계산<br>이해하기 <span class="time">3:59</span></div><div class="card-title">퇴직금 계산 방법 쉽게 이해하기</div><div class="card-meta">노동법 영상 검색 이동 ↗</div></div>
-            </a>
-        </div>
-    </div>
-    """, unsafe_allow_html=True)
 
 # -------------------------------------------------------------
 # TAB 1: 정서 케어 (AI)
@@ -287,7 +257,7 @@ with tabs[2]:
             """)
 
 # -------------------------------------------------------------
-# TAB 3: 계약서 AI 판독 (🔥 진짜 AI 비전 인식 탑재)
+# TAB 3: 계약서 AI 판독 
 # -------------------------------------------------------------
 with tabs[3]:
     st.markdown("### 📸 스마트폰 근로계약서 AI 분석 (OCR)")
@@ -296,11 +266,9 @@ with tabs[3]:
     uploaded_img = st.file_uploader("계약서 이미지 업로드 (jpg, png)", type=["jpg", "png", "jpeg"])
     
     if uploaded_img:
-        # 1) 업로드된 이미지 화면에 예쁘게 띄워주기
         image = Image.open(uploaded_img)
         st.image(image, caption="업로드된 계약서", use_container_width=True)
         
-        # 2) AI에게 이미지와 함께 분석 지시 내리기
         with st.spinner("AI가 계약서 내용을 꼼꼼히 읽고 분석하고 있습니다... (약 5~10초 소요)"):
             try:
                 analyze_prompt = """
@@ -316,8 +284,6 @@ with tabs[3]:
                 결과는 반드시 "[안전]", "[주의]", "[위험]" 중 하나의 상태로 시작하고, 
                 그 이유와 발견된 조항의 문제점을 아주 친절하고 전문적인 말투로 3~4문장으로 요약해서 알려주세요.
                 """
-                
-                # gemini-2.5-flash 모델에 이미지와 프롬프트를 함께 전송
                 response = model.generate_content([image, analyze_prompt])
                 
                 st.success("✅ AI 판독이 완료되었습니다!")
